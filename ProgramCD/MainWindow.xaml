@@ -7,6 +7,14 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-
+        <StackPanel Margin="10">
+            <TextBox 
+            x:Name="NomeTextBox" 
+            Width="200" 
+            Height="30"
+            Text="Testo iniziale" 
+            MaxLength="100" 
+            TextWrapping="Wrap"/>
+        </StackPanel>
     </Grid>
 </Window>

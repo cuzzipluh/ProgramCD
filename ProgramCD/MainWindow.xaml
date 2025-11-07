@@ -6,15 +6,95 @@
         xmlns:local="clr-namespace:ProgramCD"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <StackPanel Margin="10">
-            <TextBox 
-            x:Name="NomeTextBox" 
-            Width="200" 
-            Height="30"
-            Text="Testo iniziale" 
-            MaxLength="100" 
-            TextWrapping="Wrap"/>
-        </StackPanel>
+    <!-- Stile pulsanti principali -->
+    <Style TargetType="Button">
+        <Setter Property="Background" Value="#3a3a3a"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="Padding" Value="10,5"/>
+        <Setter Property="BorderBrush" Value="#555"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}"
+                                CornerRadius="4"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                        <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#4a90e2"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- HEADER -->
+        <DockPanel Grid.Row="0" Margin="0,0,0,10">
+            <TextBlock Text="🎵 CD Creator"
+                       FontSize="26"
+                       FontWeight="Bold"
+                       Foreground="#4a90e2"
+                       DockPanel.Dock="Left"/>
+        </DockPanel>
+
+        <!-- LISTA BRANI -->
+        <Border Grid.Row="1" Background="#2a2a2a" CornerRadius="5" Padding="10">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <DataGrid x:Name="dgTracks"
+                          AutoGenerateColumns="False"
+                          CanUserAddRows="False"
+                          Background="#2a2a2a"
+                          Foreground="White"
+                          GridLinesVisibility="None"
+                          HeadersVisibility="Column"
+                          RowBackground="#333"
+                          AlternatingRowBackground="#383838"
+                          BorderThickness="0"
+                          FontSize="14">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="#" Width="40" Binding="{Binding Index}"/>
+                        <DataGridTextColumn Header="Titolo" Width="*" Binding="{Binding Title}"/>
+                        <DataGridTextColumn Header="Durata" Width="100" Binding="{Binding Duration}"/>
+                        <DataGridTextColumn Header="Percorso file" Width="250" Binding="{Binding FilePath}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <!-- PULSANTI SOTTO LA TABELLA -->
+                <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+                    <Button x:Name="btnAdd" Content="Aggiungi brano" Click="BtnAddTrack_Click"/>
+                    <Button x:Name="btnRemove" Content="Rimuovi brano" Click="BtnRemoveTrack_Click"/>
+                    <Button x:Name="btnMoveUp" Content="▲ Su" Click="BtnMoveUp_Click"/>
+                    <Button x:Name="btnMoveDown" Content="▼ Giù" Click="BtnMoveDown_Click"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- FOOTER -->
+        <DockPanel Grid.Row="2" Margin="0,10,0,0">
+            <TextBlock Text="Totale brani:" Foreground="White" FontSize="14" DockPanel.Dock="Left" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <TextBlock x:Name="txtCount" Text="0" Foreground="#4a90e2" FontSize="14" DockPanel.Dock="Left" VerticalAlignment="Center"/>
+            <Button x:Name="btnExport" Content="💿 Crea Compilation" DockPanel.Dock="Right" Click="BtnExport_Click"/>
+        </DockPanel>
     </Grid>
 </Window>
